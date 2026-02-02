@@ -2,7 +2,7 @@
 const bgMusic = new Audio("https://files.catbox.moe/gm8fkv.mp3");
 bgMusic.loop = true;
 bgMusic.volume = 0.4;
-bgMusic.muted = true; // 🔴 bắt buộc cho mobile
+bgMusic.muted = true;
 bgMusic.preload = "auto";
 
 const tearSound = new Audio(
@@ -17,7 +17,7 @@ function startMusic() {
 
   bgMusic.play()
     .then(() => {
-      bgMusic.muted = false; // 🔥 unmute sau khi play
+      bgMusic.muted = false;
     })
     .catch(() => {});
 }
@@ -44,15 +44,15 @@ const wishes = [
 const RATE_WISH = 0.8;
 
 function randomGift(){
-  if(Math.random() < RATE_WISH){
+  if (Math.random() < RATE_WISH) {
     return {
       type: "wish",
-      text: wishes[Math.floor(Math.random()*wishes.length)]
+      text: wishes[Math.floor(Math.random() * wishes.length)]
     };
   }
   return {
     type: "money",
-    text: moneyGifts[Math.floor(Math.random()*moneyGifts.length)]
+    text: moneyGifts[Math.floor(Math.random() * moneyGifts.length)]
   };
 }
 
@@ -64,11 +64,11 @@ const resetBtn = document.getElementById("resetBtn");
 let opened = false;
 
 /* ================= CLICK ENVELOPE ================= */
-envs.forEach(env=>{
-  env.addEventListener("click", ()=>{
-    startMusic(); // 🔥 đảm bảo có user interaction
+envs.forEach(env => {
+  env.addEventListener("click", () => {
+    startMusic();
 
-    if(opened) return;
+    if (opened) return;
     opened = true;
 
     statusEl.textContent = "🧧 Đang mở phong bao…";
@@ -76,7 +76,7 @@ envs.forEach(env=>{
     env.classList.add("center","shake");
     envs.forEach(e => e !== env && e.classList.add("fade"));
 
-    setTimeout(()=>{
+    setTimeout(() => {
       env.classList.remove("shake");
       openEnvelope(env);
     }, 650);
@@ -90,14 +90,18 @@ function openEnvelope(env){
 
   const gift = randomGift();
   const giftEl = env.querySelector(".gift");
+
+  // 🔥 PHÂN LOẠI CÂU CHÚC / TIỀN
   giftEl.textContent = gift.text;
+  giftEl.classList.remove("wish","money");
+  giftEl.classList.add(gift.type);
 
   env.classList.add("opened");
 
   statusEl.textContent =
     gift.type === "money"
-    ? "🎉 Chúc mừng bạn nhận được"
-    : "🎊 Một lời chúc dành cho bạn";
+      ? "🎉 Chúc mừng bạn nhận được"
+      : "🎊 Một lời chúc dành cho bạn";
 
   firework(env);
   resetBtn.classList.add("show");
@@ -106,27 +110,29 @@ function openEnvelope(env){
 /* ================= FIREWORK ================= */
 function firework(el){
   const r = el.getBoundingClientRect();
-  for(let i=0;i<48;i++){
+  for(let i = 0; i < 48; i++){
     const f = document.createElement("div");
     f.className = "firework";
-    f.style.left = r.left + r.width/2 + "px";
-    f.style.top  = r.top  + r.height/2 + "px";
-    f.style.setProperty("--x",(Math.random()*420-210)+"px");
-    f.style.setProperty("--y",(Math.random()*420-210)+"px");
+    f.style.left = r.left + r.width / 2 + "px";
+    f.style.top  = r.top  + r.height / 2 + "px";
+    f.style.setProperty("--x", (Math.random() * 420 - 210) + "px");
+    f.style.setProperty("--y", (Math.random() * 420 - 210) + "px");
     document.body.appendChild(f);
-    setTimeout(()=>f.remove(),1200);
+    setTimeout(() => f.remove(), 1200);
   }
 }
 
 /* ================= RESET ================= */
-resetBtn.addEventListener("click", ()=>{
+resetBtn.addEventListener("click", () => {
   opened = false;
   statusEl.textContent = "Vuốt hoặc chạm để chọn 1 phong bao";
   resetBtn.classList.remove("show");
 
-  envs.forEach(env=>{
+  envs.forEach(env => {
     env.classList.remove("opened","fade","center","shake");
-    env.querySelector(".gift").textContent = "";
+    const giftEl = env.querySelector(".gift");
+    giftEl.textContent = "";
+    giftEl.classList.remove("wish","money");
     env.style.transform = "";
   });
 });
@@ -135,22 +141,22 @@ resetBtn.addEventListener("click", ()=>{
 const petalsBox = document.querySelector(".petals");
 
 function createPetal(){
-  if(!petalsBox) return;
+  if (!petalsBox) return;
 
   const p = document.createElement("div");
   p.className = "petal";
 
-  const size = Math.random()*14+10;
-  p.style.width = size+"px";
-  p.style.height = size+"px";
-  p.style.left = Math.random()*100+"%";
+  const size = Math.random() * 14 + 10;
+  p.style.width = size + "px";
+  p.style.height = size + "px";
+  p.style.left = Math.random() * 100 + "%";
 
-  const fall = Math.random()*6+6;
+  const fall = Math.random() * 6 + 6;
   p.style.animationDuration =
     `${fall}s, ${Math.random()*4+3}s, ${Math.random()*6+4}s`;
 
   petalsBox.appendChild(p);
-  setTimeout(()=>p.remove(), fall*1000);
+  setTimeout(() => p.remove(), fall * 1000);
 }
 setInterval(createPetal, 220);
 
@@ -158,14 +164,15 @@ setInterval(createPetal, 220);
 const confettiBox = document.getElementById("confettiBox");
 
 function createConfetti(){
-  if(!confettiBox) return;
+  if (!confettiBox) return;
 
   const c = document.createElement("div");
   c.className = "confetti";
-  c.style.left = Math.random()*100+"%";
+  c.style.left = Math.random() * 100 + "%";
   c.style.animationDuration =
-    (Math.random()*4+5)+"s, "+(Math.random()*2+2)+"s";
+    (Math.random() * 4 + 5) + "s, " + (Math.random() * 2 + 2) + "s";
+
   confettiBox.appendChild(c);
-  setTimeout(()=>c.remove(),9000);
+  setTimeout(() => c.remove(), 9000);
 }
-setInterval(createConfetti,160);
+setInterval(createConfetti, 160);
