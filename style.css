@@ -184,7 +184,7 @@ body{
   filter:brightness(1.1);
 }
 
-/* ===== PHONG BAO (KHÔNG NẮP – TRANG TRÍ) ===== */
+/* ===== PHONG BAO ===== */
 .env-body{
   position:absolute;
   inset:0;
@@ -239,22 +239,34 @@ body{
   transform:scale(.7);
 }
 
-/* ===== KẾT QUẢ LÌ XÌ ===== */
+/* ===== KẾT QUẢ LÌ XÌ (FIX TRÀN) ===== */
 .gift{
   position:absolute;
-  inset:0;
+  inset:12px;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:14px;
+
+  padding:12px;
   text-align:center;
-  font-size:26px;
+
+  font-size:clamp(14px, 4vw, 20px);
   font-weight:800;
-  line-height:1.3;
+  line-height:1.35;
+
   color:#ffeb3b;
+
   opacity:0;
   transform:scale(.7);
   transition:.45s ease;
+
+  word-break:break-word;
+  overflow-wrap:anywhere;
+  white-space:normal;
+
+  max-height:100%;
+  overflow:hidden;
+
   text-shadow:
     0 3px 8px rgba(0,0,0,.6),
     0 0 18px rgba(255,215,0,.7);
@@ -306,4 +318,4 @@ body{
   background:linear-gradient(#fffde7,#ffd54f);
   box-shadow:0 10px 24px rgba(0,0,0,.35);
   z-index:10000;
-}
+  }
