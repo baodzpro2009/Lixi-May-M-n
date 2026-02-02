@@ -2,6 +2,7 @@
 const bgMusic = new Audio("https://files.catbox.moe/gm8fkv.mp3");
 bgMusic.loop = true;
 bgMusic.volume = 0.4;
+bgMusic.muted = true; // 🔴 bắt buộc cho mobile
 bgMusic.preload = "auto";
 
 const tearSound = new Audio(
@@ -13,13 +14,13 @@ let musicStarted = false;
 function startMusic() {
   if (musicStarted) return;
   musicStarted = true;
-  bgMusic.muted = false;
-  bgMusic.play().catch(() => {});
-}
 
-["click","touchstart","pointerdown"].forEach(e=>{
-  document.addEventListener(e,startMusic,{once:true});
-});
+  bgMusic.play()
+    .then(() => {
+      bgMusic.muted = false; // 🔥 unmute sau khi play
+    })
+    .catch(() => {});
+}
 
 /* ================= DATA ================= */
 const moneyGifts = [
@@ -43,10 +44,16 @@ const wishes = [
 const RATE_WISH = 0.8;
 
 function randomGift(){
-  if(Math.random()<RATE_WISH){
-    return {type:"wish",text:wishes[Math.floor(Math.random()*wishes.length)]};
+  if(Math.random() < RATE_WISH){
+    return {
+      type: "wish",
+      text: wishes[Math.floor(Math.random()*wishes.length)]
+    };
   }
-  return {type:"money",text:moneyGifts[Math.floor(Math.random()*moneyGifts.length)]};
+  return {
+    type: "money",
+    text: moneyGifts[Math.floor(Math.random()*moneyGifts.length)]
+  };
 }
 
 /* ================= ELEMENT ================= */
@@ -58,19 +65,21 @@ let opened = false;
 
 /* ================= CLICK ENVELOPE ================= */
 envs.forEach(env=>{
-  env.addEventListener("click",()=>{
+  env.addEventListener("click", ()=>{
+    startMusic(); // 🔥 đảm bảo có user interaction
+
     if(opened) return;
     opened = true;
 
     statusEl.textContent = "🧧 Đang mở phong bao…";
 
     env.classList.add("center","shake");
-    envs.forEach(e=>e!==env && e.classList.add("fade"));
+    envs.forEach(e => e !== env && e.classList.add("fade"));
 
     setTimeout(()=>{
       env.classList.remove("shake");
       openEnvelope(env);
-    },650);
+    }, 650);
   });
 });
 
@@ -86,7 +95,7 @@ function openEnvelope(env){
   env.classList.add("opened");
 
   statusEl.textContent =
-    gift.type==="money"
+    gift.type === "money"
     ? "🎉 Chúc mừng bạn nhận được"
     : "🎊 Một lời chúc dành cho bạn";
 
@@ -110,7 +119,7 @@ function firework(el){
 }
 
 /* ================= RESET ================= */
-resetBtn.addEventListener("click",()=>{
+resetBtn.addEventListener("click", ()=>{
   opened = false;
   statusEl.textContent = "Vuốt hoặc chạm để chọn 1 phong bao";
   resetBtn.classList.remove("show");
@@ -141,11 +150,11 @@ function createPetal(){
     `${fall}s, ${Math.random()*4+3}s, ${Math.random()*6+4}s`;
 
   petalsBox.appendChild(p);
-  setTimeout(()=>p.remove(),fall*1000);
+  setTimeout(()=>p.remove(), fall*1000);
 }
-setInterval(createPetal,220);
+setInterval(createPetal, 220);
 
-/* ================= KIM TUYẾN VÀNG ================= */
+/* ================= KIM TUYẾN ================= */
 const confettiBox = document.getElementById("confettiBox");
 
 function createConfetti(){
