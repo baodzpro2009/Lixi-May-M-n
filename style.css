@@ -10,7 +10,12 @@
 body{
   min-height:100vh;
   font-family:"Be Vietnam Pro",system-ui;
-  background:radial-gradient(circle at top,#7b0000,#3b0000 70%);
+  background:
+    linear-gradient(rgba(90,0,0,.55), rgba(120,0,0,.85)),
+    url("https://files.catbox.moe/lca24i.jpg");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
   overflow:hidden;
   color:#fff;
 }
@@ -85,7 +90,7 @@ body{
   padding-bottom:40px;
 }
 
-/* ================= TITLE + STATUS (CĂN GIỮA) ================= */
+/* ================= TITLE + STATUS ================= */
 .box h1{
   font-size:28px;
   font-weight:800;
