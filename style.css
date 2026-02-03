@@ -1,212 +1,218 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap');
-*{box-sizing:border-box}
-
-/* ================= BODY ================= */
-body{
-  margin:0;
-  min-height:100vh;
-  font-family:"Be Vietnam Pro",system-ui;
-  background:
-    linear-gradient(rgba(90,0,0,.55),rgba(120,0,0,.85)),
-    url("https://files.catbox.moe/lca24i.jpg");
-  background-size:cover;
-  background-position:center;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+/* ================= RESET ================= */
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* ================= EFFECT LAYER ================= */
-.effects,
-.petals,
-#confettiBox,
-.lanterns{
+body{
+  min-height:100vh;
+  font-family:"Be Vietnam Pro", system-ui;
+  background: radial-gradient(circle at top,#7b0000,#3b0000 70%);
+  overflow:hidden;
+  color:#fff;
+}
+
+/* ================= PETALS ================= */
+.petals{
   position:fixed;
   inset:0;
   pointer-events:none;
-  z-index:2;
+  z-index:1;
 }
-
-/* ================= HOA ĐÀO ================= */
 .petal{
   position:absolute;
-  top:-10%;
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  background:radial-gradient(circle,#ffb7c5,#ff4d6d);
-  opacity:.85;
-  animation:petal-fall linear infinite;
-}
-
-@keyframes petal-fall{
-  to{ transform:translateY(120vh) rotate(360deg) }
-}
-
-/* ================= KIM TUYẾN VÀNG (CSS ONLY) ================= */
-#confettiBox::before,
-#confettiBox::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:
-    radial-gradient(circle at 10% 20%, gold 2px, transparent 3px),
-    radial-gradient(circle at 25% 40%, gold 2px, transparent 3px),
-    radial-gradient(circle at 50% 15%, gold 2px, transparent 3px),
-    radial-gradient(circle at 70% 30%, gold 2px, transparent 3px),
-    radial-gradient(circle at 85% 60%, gold 2px, transparent 3px),
-    radial-gradient(circle at 40% 80%, gold 2px, transparent 3px);
-  animation:confettiFall 7s linear infinite;
+  background: radial-gradient(circle,#ffb7c5,#ff5f7a);
+  border-radius:50% 50% 50% 0;
+  transform:rotate(45deg);
   opacity:.8;
+  animation:
+    fall linear infinite,
+    sway ease-in-out infinite,
+    spin linear infinite;
 }
-
-#confettiBox::after{
-  animation-duration:10s;
-  opacity:.5;
+@keyframes fall{
+  from{ top:-10%; }
+  to{ top:110%; }
 }
-
-@keyframes confettiFall{
-  from{ transform:translateY(-20vh) }
-  to{ transform:translateY(120vh) }
+@keyframes sway{
+  0%,100%{ transform:translateX(0) rotate(45deg); }
+  50%{ transform:translateX(60px) rotate(45deg); }
 }
-
-/* ================= LỒNG ĐÈN ================= */
-.lanterns{
-  top:0;
-  height:140px;
-  display:flex;
-  justify-content:space-around;
-  align-items:flex-start;
+@keyframes spin{
+  to{ transform:rotate(405deg); }
 }
-
-.lantern{
-  width:42px;
-  height:56px;
-  margin-top:12px;
-  background:linear-gradient(#ff4d4d,#b71c1c);
-  border-radius:50% 50% 40% 40%;
-  box-shadow:0 0 20px rgba(255,0,0,.7);
-  animation:lanternFloat 4s ease-in-out infinite;
-}
-
-@keyframes lanternFloat{
-  50%{ transform:translateY(-12px) }
-}
-
-/* ================= BOX ================= */
-.box{
-  position:relative;
-  z-index:10;
-  width:92%;
-  max-width:540px;
-  padding:30px 22px 36px;
-  text-align:center;
-  color:#fff;
-  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.08));
-  backdrop-filter:blur(14px);
-  border-radius:26px;
-  box-shadow:0 30px 60px rgba(0,0,0,.45);
-}
-
-#status{opacity:.9}
 
 /* ================= ENVELOPES ================= */
 .envelopes{
+  position:relative;
+  z-index:5;
   display:flex;
-  justify-content:space-between;
-  gap:14px;
-  margin-top:30px;
+  justify-content:center;
+  gap:20px;
+  margin-top:18vh;
 }
 
 .envelope{
+  width:160px;
+  height:220px;
+  background: linear-gradient(135deg,#d40000,#8b0000);
+  border-radius:16px;
   position:relative;
-  width:96px;
-  height:164px;
   cursor:pointer;
-  transition:.4s ease;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  transition:.4s;
+  overflow:hidden; /* ⭐ FIX chữ lem */
 }
 
-/* ================= PHONG BAO ================= */
-.env-body{
+/* viền vàng */
+.envelope::before{
+  content:"";
   position:absolute;
-  inset:0;
-  border-radius:22px;
-  background:linear-gradient(180deg,#ff4d4d,#c62828);
-  border:3px solid #ffd54f;
-  box-shadow:0 18px 36px rgba(0,0,0,.45);
+  inset:6px;
+  border:2px solid rgba(255,215,0,.7);
+  border-radius:12px;
+  pointer-events:none;
 }
 
-/* ===== CHỮ LÌ XÌ ===== */
-.env-body::after{
-  content:"LÌ XÌ";
+/* nắp phong bao */
+.envelope::after{
+  content:"";
   position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:clamp(18px,6vw,26px);
-  font-weight:800;
-  letter-spacing:2px;
-  color:#ffd54f;
+  top:0; left:0; right:0;
+  height:60%;
+  background:linear-gradient(135deg,#ff1a1a,#b30000);
+  clip-path:polygon(0 0,100% 0,50% 65%);
+  z-index:3;
+  transition:.5s;
 }
 
-.envelope.opened .env-body::after{
-  opacity:0;
-  transform:scale(.7);
+.envelope.opened::after{
+  transform:translateY(-120%) rotate(-8deg);
 }
 
-/* ================= GIFT ================= */
+/* ================= GIFT TEXT ================= */
 .gift{
   position:absolute;
-  inset:14px;
+  inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
+  padding:18px;
   text-align:center;
-  font-weight:800;
-  color:#ffeb3b;
-  opacity:0;
-  transform:scale(.8);
-  transition:.45s ease;
+  font-weight:700;
+  font-size:17px;
+  line-height:1.35;
+  z-index:2;
 
-  /* 🔒 FIX LEM CHỮ */
-  overflow:hidden;
-  max-height:100%;
-}
-
-.envelope.opened .gift{
-  opacity:1;
-  transform:scale(1);
-}
-
-/* ===== CÂU CHÚC ===== */
-.gift.wish{
-  font-size:clamp(13px,3.4vw,18px);
-  line-height:1.25;
-  padding:6px 8px;
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:6;
   word-break:break-word;
+  overflow-wrap:anywhere;
 }
 
-/* ===== TIỀN ===== */
+/* tiền */
 .gift.money{
-  font-size:clamp(22px,7vw,30px);
-  white-space:nowrap;
+  color:#ffd700;
+  font-size:28px;
+  text-shadow:
+    0 0 8px rgba(255,215,0,.9),
+    0 0 16px rgba(255,215,0,.6);
 }
 
-/* ================= RESET ================= */
-.reset-btn{
+/* lời chúc */
+.gift.wish{
+  color:#fff8dc;
+  font-size:16px;
+  text-shadow:0 2px 6px rgba(0,0,0,.6);
+}
+
+/* ================= CENTER / FADE ================= */
+.envelope.center{
+  transform:scale(1.15) translateY(-20px);
+}
+.envelope.fade{
+  opacity:.2;
+  transform:scale(.9);
+}
+
+/* ================= SHAKE ================= */
+.envelope.shake{
+  animation:shake .6s;
+}
+@keyframes shake{
+  0%,100%{ transform:translateX(0); }
+  25%{ transform:translateX(-6px); }
+  50%{ transform:translateX(6px); }
+  75%{ transform:translateX(-4px); }
+}
+
+/* ================= FIREWORK ================= */
+.firework{
   position:fixed;
-  top:16px;
-  left:16px;
-  padding:10px 22px;
-  border:none;
+  width:6px;
+  height:6px;
+  background:gold;
+  border-radius:50%;
+  pointer-events:none;
+  animation:boom 1s ease-out forwards;
+  box-shadow:0 0 12px gold;
+  z-index:20;
+}
+@keyframes boom{
+  to{
+    transform:
+      translate(var(--x),var(--y))
+      scale(0);
+    opacity:0;
+  }
+}
+
+/* ================= CONFETTI ================= */
+#confettiBox{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:10;
+}
+.confetti{
+  position:absolute;
+  top:-10%;
+  width:8px;
+  height:14px;
+  background:linear-gradient(#ffd700,#ff9f00);
+  animation:
+    confettiFall linear infinite,
+    confettiSpin linear infinite;
+}
+@keyframes confettiFall{
+  to{ top:110%; }
+}
+@keyframes confettiSpin{
+  to{ transform:rotate(360deg); }
+}
+
+/* ================= STATUS & RESET ================= */
+#status{
+  text-align:center;
+  margin-top:24px;
+  font-size:18px;
+  z-index:5;
+  position:relative;
+}
+
+#resetBtn{
+  opacity:0;
+  pointer-events:none;
+  margin:20px auto 0;
+  display:block;
+  padding:10px 18px;
   border-radius:999px;
-  font-weight:800;
-  background:linear-gradient(#fffde7,#ffd54f);
-  box-shadow:0 10px 24px rgba(0,0,0,.35);
-  z-index:10000;
-    }
+  border:none;
+  background:linear-gradient(135deg,#ffd700,#ff9f00);
+  color:#5a0000;
+  font-weight:700;
+  transition:.3s;
+}
+#resetBtn.show{
+  opacity:1;
+  pointer-events:auto;
+  }
