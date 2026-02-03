@@ -16,20 +16,20 @@ body{
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
-  overflow:hidden;
+  overflow-x:hidden;
   color:#fff;
 }
 
 /* ================= EFFECT LAYERS ================= */
-.petals,
-#confettiBox{
+.effects{
   position:fixed;
   inset:0;
   pointer-events:none;
+  z-index:1;
 }
 
 /* ================= PETALS ================= */
-.petals{ z-index:1 }
+.petals{ position:absolute; inset:0 }
 
 .petal{
   position:absolute;
@@ -39,46 +39,31 @@ body{
   border-radius:50% 50% 50% 0;
   transform:rotate(45deg);
   opacity:.8;
-  animation:
-    fall linear infinite,
-    sway ease-in-out infinite,
-    spin linear infinite;
+  animation: fall linear infinite;
 }
 
 @keyframes fall{
   from{ top:-10% }
   to{ top:110% }
 }
-@keyframes sway{
-  0%,100%{ transform:translateX(0) rotate(45deg) }
-  50%{ transform:translateX(60px) rotate(45deg) }
-}
-@keyframes spin{
-  to{ transform:rotate(405deg) }
-}
 
 /* ================= CONFETTI ================= */
-#confettiBox{ z-index:2 }
+#confettiBox{ position:absolute; inset:0 }
 
-.confetti{
+.sparkle{
   position:absolute;
-  top:-10%;
-  width:8px;
-  height:14px;
+  width:6px;
+  height:12px;
   background:linear-gradient(#ffd700,#ff9f00);
-  animation:
-    confettiFall linear infinite,
-    confettiSpin linear infinite;
+  animation: confetti 6s linear infinite;
 }
 
-@keyframes confettiFall{
+@keyframes confetti{
+  from{ top:-10% }
   to{ top:110% }
 }
-@keyframes confettiSpin{
-  to{ transform:rotate(360deg) }
-}
 
-/* ================= BOX ================= */
+/* ================= MAIN BOX ================= */
 .box{
   position:relative;
   z-index:5;
@@ -87,30 +72,32 @@ body{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding-bottom:40px;
+  padding:30px 12px 50px;
+  text-align:center;
 }
 
-/* ================= TITLE + STATUS ================= */
 .box h1{
   font-size:28px;
   font-weight:800;
   margin-bottom:8px;
-  text-align:center;
-  letter-spacing:1px;
 }
 
 #status{
   font-size:16px;
   opacity:.9;
-  margin-bottom:28px;
-  text-align:center;
+  margin-bottom:26px;
 }
 
 /* ================= ENVELOPES ================= */
 .envelopes{
   display:flex;
   justify-content:center;
-  gap:20px;
+  align-items:center;
+  gap:22px;
+  flex-wrap:wrap;            /* ✅ nhiều bao */
+  max-width:900px;
+  margin:0 auto;
+  padding:10px;
 }
 
 .envelope{
@@ -120,9 +107,15 @@ body{
   border-radius:16px;
   position:relative;
   cursor:pointer;
-  box-shadow:0 10px 30px rgba(0,0,0,.4);
-  transition:.4s;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  transition:transform .35s ease, box-shadow .35s ease;
   overflow:hidden;
+}
+
+/* hover */
+.envelope:hover{
+  transform:translateY(-8px) scale(1.04);
+  box-shadow:0 16px 40px rgba(0,0,0,.55);
 }
 
 /* viền vàng */
@@ -130,12 +123,11 @@ body{
   content:"";
   position:absolute;
   inset:6px;
-  border:2px solid rgba(255,215,0,.7);
+  border:2px solid rgba(255,215,0,.75);
   border-radius:12px;
-  pointer-events:none;
 }
 
-/* nắp phong bao */
+/* nắp */
 .envelope::after{
   content:"";
   position:absolute;
@@ -144,11 +136,11 @@ body{
   background:linear-gradient(135deg,#ff1a1a,#b30000);
   clip-path:polygon(0 0,100% 0,50% 65%);
   z-index:3;
-  transition:.5s;
+  transition:.45s ease;
 }
 
 .envelope.opened::after{
-  transform:translateY(-120%) rotate(-8deg);
+  transform:translateY(-120%) rotate(-6deg);
 }
 
 /* ================= GIFT ================= */
@@ -159,85 +151,35 @@ body{
   align-items:center;
   justify-content:center;
   padding:18px;
-  text-align:center;
   font-weight:700;
-  font-size:17px;
-  line-height:1.35;
   z-index:2;
-  word-break:break-word;
+  text-align:center;
 }
 
 .gift.money{
   color:#ffd700;
   font-size:28px;
-  text-shadow:
-    0 0 8px rgba(255,215,0,.9),
-    0 0 16px rgba(255,215,0,.6);
+  text-shadow:0 0 12px rgba(255,215,0,.9);
 }
 
 .gift.wish{
   color:#fff8dc;
   font-size:16px;
-  text-shadow:0 2px 6px rgba(0,0,0,.6);
-}
-
-/* ================= CENTER / FADE ================= */
-.envelope.center{
-  transform:scale(1.15) translateY(-20px);
-}
-
-.envelope.fade{
-  opacity:.2;
-  transform:scale(.9);
-}
-
-/* ================= SHAKE ================= */
-.envelope.shake{
-  animation:shake .6s;
-}
-
-@keyframes shake{
-  0%,100%{ transform:translateX(0) }
-  25%{ transform:translateX(-6px) }
-  50%{ transform:translateX(6px) }
-  75%{ transform:translateX(-4px) }
-}
-
-/* ================= FIREWORK ================= */
-.firework{
-  position:fixed;
-  width:6px;
-  height:6px;
-  background:gold;
-  border-radius:50%;
-  pointer-events:none;
-  animation:boom 1s ease-out forwards;
-  box-shadow:0 0 12px gold;
-  z-index:20;
-}
-
-@keyframes boom{
-  to{
-    transform:translate(var(--x),var(--y)) scale(0);
-    opacity:0;
-  }
+  line-height:1.4;
 }
 
 /* ================= RESET BUTTON ================= */
 #resetBtn{
-  opacity:0;
-  pointer-events:none;
   margin-top:22px;
-  padding:10px 20px;
+  padding:10px 22px;
   border-radius:999px;
   border:none;
   background:linear-gradient(135deg,#ffd700,#ff9f00);
   color:#5a0000;
   font-weight:800;
-  transition:.3s;
+  display:none;
 }
 
 #resetBtn.show{
-  opacity:1;
-  pointer-events:auto;
-}
+  display:inline-block;
+  }
