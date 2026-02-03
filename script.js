@@ -45,27 +45,30 @@ function randomGift(){
 
 /* ================= ELEMENT ================= */
 const envs = document.querySelectorAll(".envelope");
+const envelopesBox = document.querySelector(".envelopes");
 const statusEl = document.getElementById("status");
-const resetBtn = document.getElementById("resetBtn");
-
-let opened = false;
 
 /* ================= CLICK ================= */
 envs.forEach(env=>{
   env.addEventListener("click", ()=>{
     startMusic();
-    if(opened) return;
-    opened = true;
 
+    // đã mở thì bỏ qua
+    if(env.classList.contains("opened")) return;
+
+    // bỏ trạng thái done nếu còn mở
+    envelopesBox.classList.remove("done");
+
+    // bỏ focus của bao khác
+    envs.forEach(e=>e.classList.remove("focus"));
+
+    // focus bao được chọn
+    env.classList.add("focus");
     statusEl.textContent = "🧧 Đang mở phong bao…";
 
-    env.classList.add("center","shake");
-    envs.forEach(e => e !== env && e.classList.add("fade"));
-
     setTimeout(()=>{
-      env.classList.remove("shake");
       openEnvelope(env);
-    },650);
+    }, 900);
   });
 });
 
@@ -88,39 +91,37 @@ function openEnvelope(env){
       ? "🎉 Chúc mừng bạn nhận được"
       : "🎊 Một lời chúc dành cho bạn";
 
-  firework(env);
-  resetBtn.classList.add("show");
+  fireworkCenter();
+
+  checkDone(); // ⭐ kiểm tra đã mở hết chưa
 }
 
-/* ================= FIREWORK (BỔ SUNG) ================= */
-function firework(el){
-  const r = el.getBoundingClientRect();
-  for(let i=0;i<36;i++){
-    const f = document.createElement("div");
-    f.className = "firework";
-    f.style.left = r.left + r.width/2 + "px";
-    f.style.top  = r.top  + r.height/2 + "px";
-    f.style.setProperty("--x",(Math.random()*360-180)+"px");
-    f.style.setProperty("--y",(Math.random()*360-180)+"px");
-    document.body.appendChild(f);
-    setTimeout(()=>f.remove(),1000);
+/* ================= KIỂM TRA MỞ HẾT ================= */
+function checkDone(){
+  const openedCount = document.querySelectorAll(".envelope.opened").length;
+
+  if(openedCount === envs.length){
+    setTimeout(()=>{
+      // trả tất cả về layout ban đầu
+      envs.forEach(e=>e.classList.remove("focus"));
+      envelopesBox.classList.add("done");
+
+      statusEl.textContent = "🎊 Bạn đã mở hết phong bao – Chúc năm mới phát tài!";
+    }, 600);
   }
 }
 
-/* ================= RESET ================= */
-resetBtn.addEventListener("click", ()=>{
-  opened = false;
-  statusEl.textContent = "Vuốt hoặc chạm để chọn 1 phong bao";
-  resetBtn.classList.remove("show");
-
-  envs.forEach(env=>{
-    env.classList.remove("opened","fade","center","shake");
-    const giftEl = env.querySelector(".gift");
-    giftEl.textContent = "";
-    giftEl.classList.remove("wish","money");
-    env.style.transform = "";
-  });
-});
+/* ================= FIREWORK (GIỮA MÀN HÌNH) ================= */
+function fireworkCenter(){
+  for(let i=0;i<16;i++){
+    const f = document.createElement("div");
+    f.className = "firework";
+    f.style.setProperty("--x", Math.random()*300-150 + "px");
+    f.style.setProperty("--y", Math.random()*300-150 + "px");
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1200);
+  }
+}
 
 /* ================= HOA ĐÀO ================= */
 const petalsBox = document.querySelector(".petals");
