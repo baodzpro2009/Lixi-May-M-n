@@ -2,242 +2,250 @@
 
 /* ================= RESET ================= */
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-min-height:100vh;
-font-family:"Be Vietnam Pro",system-ui;
-background:
-linear-gradient(rgba(90,0,0,.55), rgba(120,0,0,.85)),
-url("https://files.catbox.moe/lca24i.jpg");
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-overflow:hidden;
-color:#fff;
+  min-height:100vh;
+  font-family:"Be Vietnam Pro",system-ui;
+  background:
+    linear-gradient(rgba(90,0,0,.55), rgba(120,0,0,.85)),
+    url("https://files.catbox.moe/lca24i.jpg");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  overflow:hidden;
+  color:#fff;
 }
 
 /* ================= EFFECT LAYERS ================= */
 .petals,
 #confettiBox{
-position:fixed;
-inset:0;
-pointer-events:none;
+  position:fixed;
+  inset:0;
+  pointer-events:none;
 }
 
 /* ================= PETALS ================= */
 .petals{ z-index:1 }
 
 .petal{
-position:absolute;
-width:14px;
-height:14px;
-background:radial-gradient(circle,#ffb7c5,#ff5f7a);
-border-radius:50% 50% 50% 0;
-transform:rotate(45deg);
-opacity:.8;
-animation:
-fall linear infinite,
-sway ease-in-out infinite,
-spin linear infinite;
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:radial-gradient(circle,#ffb7c5,#ff5f7a);
+  border-radius:50% 50% 50% 0;
+  transform:rotate(45deg);
+  opacity:.8;
+  animation:
+    fall linear infinite,
+    sway ease-in-out infinite,
+    spin linear infinite;
 }
 
 @keyframes fall{
-from{ top:-10% }
-to{ top:110% }
+  from{ top:-10% }
+  to{ top:110% }
 }
 @keyframes sway{
-0%,100%{ transform:translateX(0) rotate(45deg) }
-50%{ transform:translateX(60px) rotate(45deg) }
+  0%,100%{ transform:translateX(0) rotate(45deg) }
+  50%{ transform:translateX(60px) rotate(45deg) }
 }
 @keyframes spin{
-to{ transform:rotate(405deg) }
+  to{ transform:rotate(405deg) }
 }
 
 /* ================= CONFETTI ================= */
 #confettiBox{ z-index:2 }
 
 .confetti{
-position:absolute;
-top:-10%;
-width:8px;
-height:14px;
-background:linear-gradient(#ffd700,#ff9f00);
-animation:
-confettiFall linear infinite,
-confettiSpin linear infinite;
+  position:absolute;
+  top:-10%;
+  width:8px;
+  height:14px;
+  background:linear-gradient(#ffd700,#ff9f00);
+  animation:
+    confettiFall linear infinite,
+    confettiSpin linear infinite;
 }
 
 @keyframes confettiFall{
-to{ top:110% }
+  to{ top:110% }
 }
 @keyframes confettiSpin{
-to{ transform:rotate(360deg) }
+  to{ transform:rotate(360deg) }
 }
 
 /* ================= BOX ================= */
 .box{
-position:relative;
-z-index:5;
-min-height:100vh;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-padding-bottom:40px;
+  position:relative;
+  z-index:5;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:40px 10px 60px;
 }
 
 /* ================= TITLE + STATUS ================= */
 .box h1{
-font-size:28px;
-font-weight:800;
-margin-bottom:8px;
-text-align:center;
-letter-spacing:1px;
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:8px;
+  text-align:center;
 }
 
 #status{
-font-size:16px;
-opacity:.9;
-margin-bottom:28px;
-text-align:center;
+  font-size:16px;
+  opacity:.9;
+  margin-bottom:28px;
+  text-align:center;
 }
 
 /* ================= ENVELOPES ================= */
 .envelopes{
-display:flex;
-justify-content:center;
-gap:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:22px;
+  flex-wrap:wrap;
+  max-width:900px;
 }
 
+/* phong bao */
 .envelope{
-width:160px;
-height:220px;
-background:linear-gradient(135deg,#d40000,#8b0000);
-border-radius:16px;
-position:relative;
-cursor:pointer;
-box-shadow:0 10px 30px rgba(0,0,0,.4);
-transition:.4s;
-overflow:hidden;
+  width:160px;
+  height:220px;
+  background:linear-gradient(135deg,#d40000,#8b0000);
+  border-radius:16px;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  transition:.35s;
+  overflow:hidden;
+}
+
+/* hover */
+.envelope:hover{
+  transform:translateY(-8px) scale(1.04);
 }
 
 /* viền vàng */
 .envelope::before{
-content:"";
-position:absolute;
-inset:6px;
-border:2px solid rgba(255,215,0,.7);
-border-radius:12px;
-pointer-events:none;
+  content:"";
+  position:absolute;
+  inset:6px;
+  border:2px solid rgba(255,215,0,.75);
+  border-radius:12px;
 }
 
 /* nắp phong bao */
 .envelope::after{
-content:"";
-position:absolute;
-top:0; left:0; right:0;
-height:60%;
-background:linear-gradient(135deg,#ff1a1a,#b30000);
-clip-path:polygon(0 0,100% 0,50% 65%);
-z-index:3;
-transition:.5s;
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0;
+  height:60%;
+  background:linear-gradient(135deg,#ff1a1a,#b30000);
+  clip-path:polygon(0 0,100% 0,50% 65%);
+  z-index:3;
+  transition:.45s ease;
 }
 
+/* mở bao */
 .envelope.opened::after{
-transform:translateY(-120%) rotate(-8deg);
+  transform:translateY(-120%) rotate(-6deg);
 }
 
 /* ================= GIFT ================= */
 .gift{
-position:absolute;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:18px;
-text-align:center;
-font-weight:700;
-font-size:17px;
-line-height:1.35;
-z-index:2;
-word-break:break-word;
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  text-align:center;
+  font-weight:700;
+  z-index:2;
+  pointer-events:none;
 }
 
 .gift.money{
-color:#ffd700;
-font-size:28px;
-text-shadow:
-0 0 8px rgba(255,215,0,.9),
-0 0 16px rgba(255,215,0,.6);
+  color:#ffd700;
+  font-size:28px;
+  text-shadow:
+    0 0 10px rgba(255,215,0,.95),
+    0 0 22px rgba(255,215,0,.6);
 }
 
 .gift.wish{
-color:#fff8dc;
-font-size:16px;
-text-shadow:0 2px 6px rgba(0,0,0,.6);
-}
-
-/* ================= CENTER / FADE ================= */
-.envelope.center{
-transform:scale(1.15) translateY(-20px);
-}
-
-.envelope.fade{
-opacity:.2;
-transform:scale(.9);
+  color:#fff8dc;
+  font-size:16px;
+  line-height:1.4;
 }
 
 /* ================= SHAKE ================= */
 .envelope.shake{
-animation:shake .6s;
+  animation:shake .5s;
 }
 
 @keyframes shake{
-0%,100%{ transform:translateX(0) }
-25%{ transform:translateX(-6px) }
-50%{ transform:translateX(6px) }
-75%{ transform:translateX(-4px) }
+  0%,100%{ transform:translateX(0) }
+  25%{ transform:translateX(-5px) }
+  50%{ transform:translateX(5px) }
+  75%{ transform:translateX(-3px) }
 }
 
 /* ================= FIREWORK ================= */
 .firework{
-position:fixed;
-width:6px;
-height:6px;
-background:gold;
-border-radius:50%;
-pointer-events:none;
-animation:boom 1s ease-out forwards;
-box-shadow:0 0 12px gold;
-z-index:20;
+  position:fixed;
+  width:6px;
+  height:6px;
+  background:gold;
+  border-radius:50%;
+  pointer-events:none;
+  animation:boom 1s ease-out forwards;
+  box-shadow:0 0 12px gold;
+  z-index:20;
 }
 
 @keyframes boom{
-to{
-transform:translate(var(--x),var(--y)) scale(0);
-opacity:0;
-}
+  to{
+    transform:translate(var(--x),var(--y)) scale(0);
+    opacity:0;
+  }
 }
 
-/* ================= RESET BUTTON ================= */
+/* ================= RESET BUTTON (GÓC TRÊN PHẢI) ================= */
 #resetBtn{
-opacity:0;
-pointer-events:none;
-margin-top:22px;
-padding:10px 20px;
-border-radius:999px;
-border:none;
-background:linear-gradient(135deg,#ffd700,#ff9f00);
-color:#5a0000;
-font-weight:800;
-transition:.3s;
+  position:fixed;
+  top:16px;
+  right:16px;
+  z-index:50;
+
+  opacity:0;
+  pointer-events:none;
+
+  padding:10px 18px;
+  border-radius:999px;
+  border:none;
+  background:linear-gradient(135deg,#ffd700,#ff9f00);
+  color:#5a0000;
+  font-weight:800;
+  font-size:14px;
+
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+  transition:.3s;
 }
 
 #resetBtn.show{
-opacity:1;
-pointer-events:auto;
+  opacity:1;
+  pointer-events:auto;
+}
+
+#resetBtn:hover{
+  transform:scale(1.06);
 }
