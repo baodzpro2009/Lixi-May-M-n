@@ -35,7 +35,7 @@ const wishes = [
   "May mắn gõ cửa, cơ hội đầy nhà 🍀"
 ];
 
-const RATE_WISH = 0.85;
+const RATE_WISH = 0.7;
 
 function randomGift(){
   return Math.random() < RATE_WISH
@@ -156,4 +156,5 @@ function createConfetti(){
   setTimeout(()=>c.remove(),9000);
 }
 setInterval(createConfetti,160);
+
 
