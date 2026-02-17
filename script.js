@@ -19,7 +19,7 @@ function startMusic(){
 
 /* ================= DATA ================= */
 const moneyGifts = [
-  "2.000đ","5.000đ","10.000đ","20.000đ","50.000đ","100.000đ"
+  "2.000đ","5.000đ","10.000đ","20.000đ","15000đ"
 ];
 
 const wishes = [
@@ -35,7 +35,7 @@ const wishes = [
   "May mắn gõ cửa, cơ hội đầy nhà 🍀"
 ];
 
-const RATE_WISH = 0.7;
+const RATE_WISH = 0.8;
 
 function randomGift(){
   return Math.random() < RATE_WISH
@@ -156,6 +156,7 @@ function createConfetti(){
   setTimeout(()=>c.remove(),9000);
 }
 setInterval(createConfetti,160);
+
 
 
 
